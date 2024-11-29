@@ -203,4 +203,4 @@ plot(gtrSat2);
 legend('sat = 0.7');  % Add legend
 subplot(4,1,4);
 plot(gtrSat3);
-legend('sat = 0.3');  % Add legend
+legend('sat = 0.7');  % Add legend
