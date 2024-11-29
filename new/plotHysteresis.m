@@ -110,8 +110,8 @@ end
 
 figure;
 subplot(2, 1, 1);
-plot(fs, gtr);
+plot(gtr);
 subplot(2, 1, 2);
-plot(gtrSat, fs);
+plot(gtrSat);
 
 soundsc(gtrSat, gFs);
