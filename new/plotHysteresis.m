@@ -194,13 +194,17 @@ end
 figure;
 subplot(4,1,1);
 plot(gtr);
+ylim([-1 1])
 legend('dry');
 subplot(4,1,2);
 plot(gtrSat1);
+ylim([-1 1])
 legend('sat = 1');
 subplot(4,1,3);
 plot(gtrSat2);
+ylim([-1 1])
 legend('sat = 0.7');  % Add legend
 subplot(4,1,4);
 plot(gtrSat3);
+ylim([-1 1])
 legend('sat = 0.3');  % Add legend
