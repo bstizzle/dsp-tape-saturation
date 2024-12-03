@@ -1,0 +1,54 @@
+function output = Hsys(x, sat, drive, width, alpha, k, fs)
+
+    Ms = 0.5 + 1.5*(1-sat);
+    a = Ms / (0.01 + 6*drive);
+    c = (1-width)^0.5 - 0.01;
+    
+    x1_L = 0;
+    xD1_L = 0;
+    Mn1_L = 0;
+    Hn1_L = 0;
+    Hdn1_L = 0;
+
+    x1_R = 0;
+    xD1_R = 0;
+    Mn1_R = 0;
+    Hn1_R = 0;
+    Hdn1_R = 0;
+
+    y = zeros(size(x));
+
+    for n=2:length(x)
+        H_L = x(n, 1);
+
+        diffArray = Diff(H_L, x1_L, xD1_L, alpha, fs);
+        x1_L = diffArray(1);
+        xD1_L = diffArray(2);
+        Hd_L = diffArray(2);
+
+        M = RK4(fs, @JA, H_L, Hn1_L, Hd_L, Hdn1_L, Mn1_L, Ms, a, alpha, k, c);
+    
+        Mn1 = M;
+        Hn1 = H_L;
+        Hdn1 = Hd;
+    
+        y(n, 1) = M;
+
+        H_R = x(n, 2);
+
+        diffArray = Diff(H_R, x1, xD1, alpha, fs);
+        x1 = diffArray(1);
+        xD1 = diffArray(2);
+        Hd = diffArray(2);
+
+        M = RK4(fs, @JA, H_R, Hn1, Hd, Hdn1, Mn1, Ms, a, alpha, k, c);
+    
+        Mn1 = M;
+        Hn1 = H_R;
+        Hdn1 = Hd;
+    
+        y(n, 2) = M;
+    end
+
+    output = y;
+end

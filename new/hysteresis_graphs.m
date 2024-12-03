@@ -3,11 +3,11 @@ seconds = 1;
 t = 0:1/fs:seconds;
 freq = 100;
 
-x = sin(2*pi*freq*t);
+x = sin(2*pi*freq*t)';
 
-sat = [0, 0.33, 0.66, 1, 1.5];
-drive = [0, 0.33, 0.66, 1, 1.5];
-width = [0, 0.33, 0.66, 1, 1.5];
+sat = [0, 0.33, 0.66, 1, 1.33];
+drive = [0, 0.33, 0.66, 1, 1.33];
+width = [0, 0.33, 0.66, 1, 1.33];
 
 alpha = 1.6e-3;
 k = 30 * (1-0.5)^6 + 0.01; % coercivity
@@ -46,4 +46,37 @@ legend('0', '0.33', '0.66', '1', '1.5');  % Add legend
 xlabel('Input Gain');  % Label for x-axis
 ylabel('Output Gain');  % Label for y-axis
 title('Hysteresis Simulation: Width');  % Title of the plot
+hold off;
+
+shortX = sin(2*pi*8*t)';
+xClip = symmclip(shortX, 1/3);
+figure;
+hold on;
+subplot(2,1,1);
+plot(shortX);
+title('Dry Signal');
+subplot(2,1,2);
+plot(xClip);
+title('Applied Symmetrical Soft Clipping');
+hold off;
+
+[gtr, gFs] = audioread("clean_gtr_blues.wav");
+
+gtrHys = Hsys(gtr, 1, 1, 1, alpha, k, gFs);
+gtrHysClip = symmclip(gtrHys, 1/3);
+
+figure;
+hold on;
+subplot(3,1,1);
+plot(gtr);
+title('Dry Signal');
+ylim([-1 1]);
+subplot(3,1,2);
+plot(gtrHys);
+title('Applied Hysteresis');
+ylim([-1 1]);
+subplot(3,1,3);
+plot(gtrHysClip);
+title('Applied Hysteresis & Sym. Soft Clipping');
+ylim([-1 1]);
 hold off;
