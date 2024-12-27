@@ -59,19 +59,24 @@ subplot(2,1,2);
 plot(xClip);
 title('Applied Symmetrical Soft Clipping');
 hold off;
-
-gainSweep = linspace(0, 1)
-xComp = compr(shortX, -0.1, 0.9);
+%%
+gainSweep = linspace(0, 1, 1000);
+xComp = compr(gainSweep, -0.4, 0.5);
 figure;
+plot(gainSweep, gainSweep)
 hold on;
+plot(gainSweep, xComp)
+legend('Dry Signal', 'Compression');
+%{
 subplot(2,1,1);
-plot(shortX);
+plot(gainSweep);
 title('Dry Signal');
 subplot(2,1,2);
-plot(xComp);
+plot(gainSweep,xComp);
 title('Applied Compression');
+%}
 hold off;
-
+%%
 [gtr, gFs] = audioread("clean_gtr_blues.wav");
 
 gtrHys = Hsys(gtr, 1, 1, 1, alpha, k, gFs);
