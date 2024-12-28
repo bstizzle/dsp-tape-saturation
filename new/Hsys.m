@@ -1,9 +1,11 @@
 function output = Hsys(x, sat, drive, width, alpha, k, fs)
-
+    
+    % calculate saturation, width, and drive parameters
     Ms = 0.5 + 1.5*(1-sat);
     a = Ms / (0.01 + 6*drive);
     c = (1-width)^0.5 - 0.01;
     
+    % initialize sample variables
     x1_L = 0;
     xD1_L = 0;
     Mn1_L = 0;
@@ -28,13 +30,16 @@ function output = Hsys(x, sat, drive, width, alpha, k, fs)
             x1_L = diffArray(1);
             xD1_L = diffArray(2);
             Hd_L = diffArray(2);
-    
+            
+            % get output
             M = RK4(fs, @JA, H_L, Hn1_L, Hd_L, Hdn1_L, Mn1_L, Ms, a, alpha, k, c);
-        
+            
+            % set previous-state H and M variables to the current states
             Mn1_L = M;
             Hn1_L = H_L;
             Hdn1_L = Hd_L;
-        
+            
+            % set output
             y(n, 1) = M;
     
             H_R = x(n, 2);
@@ -45,7 +50,7 @@ function output = Hsys(x, sat, drive, width, alpha, k, fs)
             Hd_R = diffArray(2);
     
             M = RK4(fs, @JA, H_R, Hn1_R, Hd_R, Hdn1_R, Mn1_R, Ms, a, alpha, k, c);
-        
+            
             Mn1_R = M;
             Hn1_R = H_R;
             Hdn1_R = Hd_R;
