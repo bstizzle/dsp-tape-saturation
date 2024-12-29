@@ -1,6 +1,4 @@
 function output = symmclip(x, thresh)
-    % y=symclip(x)
-    % "Overdrive" simulation with symmetrical clipping
     % x - input
     % thresh - threshold for symmetrical soft clipping
 

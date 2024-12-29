@@ -67,6 +67,9 @@ plot(gainSweep, gainSweep)
 hold on;
 plot(gainSweep, xComp)
 legend('Dry Signal', 'Compression');
+xlabel('Input Level');
+ylabel('Output Level');
+title('Compressor')
 %{
 subplot(2,1,1);
 plot(gainSweep);
@@ -110,4 +113,4 @@ hold off;
 gtrHys = Hsys(gtr, 1, 1, 1, alpha, k, gFs);
 gtrHysClip = symmclip(gtrHys, 1/3);
 
-soundsc(gtrHysClip, gFs);
+%soundsc(gtrHysClip, gFs);

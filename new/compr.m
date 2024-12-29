@@ -1,6 +1,5 @@
 function output = compr(x,comp,a)
-    % Compressor/expander
-    % comp - compression: O>comp>-1, expansion: O<comp<1
+    % comp - compression -1<comp<0
     % a - filter parameter <l
     h = filter((1-a)^2, [1.0000 -2*a a^2], abs(x));
     h = h / max(h);
