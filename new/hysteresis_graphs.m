@@ -134,15 +134,19 @@ ylim([-1 1]);
 
 [gtr, gFs] = audioread("clean_gtr_blues.wav");
 
-gtrHys = Hsys(gtr, 1, 0.66, 0.8, alpha, k, gFs);
+gtrHys = Hsys(gtr, 0.2, 0.8, 0.8, alpha, k, gFs);
 gtrHysClip = symmclip(gtrHys, 1/3);
 gtrHysClipComp = compr(gtrHysClip, -0.4, 0.7);
+%audiowrite('tape-sat-output.wav',gtrHysClipComp,gFs);
 
 [plugin, pFs] = audioread("sound-processing-proj.wav");
+
 %%
+
 s1 = audioplayer(gtr, gFs);
 s2 = audioplayer(gtrHysClipComp, gFs);
 s3 = audioplayer(plugin, pFs);
 playblocking(s1);
 playblocking(s2);
 playblocking(s3);
+
